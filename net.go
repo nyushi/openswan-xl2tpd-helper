@@ -37,11 +37,11 @@ func waitForNetIF(name string, timeout time.Duration, f func(netif *net.Interfac
 	t := time.Now()
 	deadline := t.Add(timeout)
 	for {
-		if netif, _ := net.InterfaceByName(name); netif != nil {
-			if f(netif) {
-				return nil
-			}
+		netif, _ := net.InterfaceByName(name)
+		if f(netif) {
+			return nil
 		}
+
 		if time.Now().After(deadline) {
 			break
 		}

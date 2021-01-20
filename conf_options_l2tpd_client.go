@@ -32,7 +32,7 @@ refuse-eap
 require-mschap-v2
 noccp
 noauth
-idle 1800
+idle 0
 mtu 1410
 mru 1410
 defaultroute

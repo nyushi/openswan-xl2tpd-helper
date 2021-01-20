@@ -36,7 +36,7 @@ func startSystemdService(svc string) error {
 
 func stopSystemdService(svc string) error {
 	err := systemdOperation(svc, func(sdcon *dbus.Conn, c chan string) error {
-		_, err := sdcon.StartUnit(svc, "replace", c)
+		_, err := sdcon.StopUnit(svc, "replace", c)
 		return err
 	})
 	if err != nil {

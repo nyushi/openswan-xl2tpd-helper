@@ -14,11 +14,13 @@ func ipsecConfFile(local, remote string) error {
 	}
 	t := template.Must(template.New("ipsec_conf").Parse(ipsecConfTemplate))
 	if err := t.Execute(f, struct {
-		Local  string
-		Remote string
+		Local     string
+		Remote    string
+		Interface string
 	}{
-		Local:  local,
-		Remote: remote,
+		Local:     local,
+		Remote:    remote,
+		Interface: *ifName,
 	}); err != nil {
 		return fmt.Errorf("failed to fill template %s: %w", path, err)
 	}
@@ -66,7 +68,7 @@ config setup
 	protostack=netkey
 	# Use this to log to a file, or disable logging on embedded systems (like openwrt)
 	#plutostderrlog=/dev/null
-        plutoopts="--interface=ens33" # added
+        plutoopts="--interface={{ .Interface }}" # added
 
 
 # Add connections here
