@@ -53,14 +53,6 @@ func main() {
 	if *debug {
 		log.SetLevel(logrus.DebugLevel)
 	}
-	b, err := ioutil.ReadFile(*confPath)
-	if err != nil {
-		log.Fatalf("failed to read %s", confPath)
-	}
-	conf := Config{}
-	if err := json.Unmarshal(b, &conf); err != nil {
-		log.Fatalf("failed to parse %s: %s", confPath, err)
-	}
 	switch flag.Args()[0] {
 	case "stop":
 		commands := []string{"ip", "route", "del", "default", "dev", "ppp0"}
@@ -84,6 +76,14 @@ func main() {
 		}
 
 	case "start":
+		b, err := ioutil.ReadFile(*confPath)
+		if err != nil {
+			log.Fatalf("failed to read %s", confPath)
+		}
+		conf := Config{}
+		if err := json.Unmarshal(b, &conf); err != nil {
+			log.Fatalf("failed to parse %s: %s", confPath, err)
+		}
 		log.Debug("add route for vpn server")
 		if err := addRouteForVPNServer(conf.Server); err != nil {
 			log.Fatalf("failed to add vpn route: %w", err)

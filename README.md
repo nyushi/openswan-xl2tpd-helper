@@ -1,5 +1,6 @@
 ```
 $ yay -S openswan xl2tpd
+$ go install github.com/nyushi/openswan-xl2tpd-helper
 
 $ mkdir -p ~/.config/openswan-xl2tpd-helper
 $ cat > ~/.config/openswan-xl2tpd-helper/config.json
@@ -10,7 +11,7 @@ $ cat > ~/.config/openswan-xl2tpd-helper/config.json
   "pass": "<Pass>"
 }
 
-$ sudo openswan-xl2tpd-helper -server "<ServerAddress>" -psk "<PreSharedKey>" -user "<Username>" -pass "<Password>" -interface "<Interface>" start
+$ sudo openswan-xl2tpd-helper -conf ~/.config/openswan-xl2tpd-helper/config.json -interface eth0 start
 
 $ sudo openswan-xl2tpd-helper stop
 ```
